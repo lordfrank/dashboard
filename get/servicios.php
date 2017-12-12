@@ -1,0 +1,25 @@
+<?php
+include("../conection/config.php");
+
+$salida=array();
+$id=mysqli_real_escape_string($mysqli,$_REQUEST['id']);
+
+if (strlen($id)>0){
+	$sql = "SELECT *  from servicios where id=$id";
+}else{
+$sql = "SELECT servicios.id, servicios.servicio,estados.color,servicios.estado_servicio,servicios.estado, servicios.estado_id  from servicios,estados where estados.id=estado_id order by servicio asc";
+}
+		$result=$mysqli->query($sql);
+		$rows = $result->num_rows;
+		
+		if($rows > 0) {
+			while($row = $result->fetch_assoc())
+			{
+				$salida[]=$row;
+				} 
+		}
+		
+		print json_encode(array("servicios"=>$salida));
+		
+
+?>
