@@ -4,7 +4,7 @@ include("../conection/config.php");
 $salida=array();
 
 
-		$evento_id = mysqli_real_escape_string($mysqli,$_REQUEST['evento']);
+		$evento_id = mysqli_real_escape_string($mysqli,$_REQUEST['evento'])*1;
 		$id_servicio = mysqli_real_escape_string($mysqli,$_REQUEST['servicio']);
 	    $fecha = mysqli_real_escape_string($mysqli,$_REQUEST['fecha']);
 		$hora = mysqli_real_escape_string($mysqli,$_REQUEST['hora']);
