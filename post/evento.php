@@ -24,9 +24,9 @@ $sql = "INSERT INTO `servicio_eventos` ( `id_servicio`, `fecha`, `estado_evento`
 		$sql = "update  `servicios`  set estado_id=$estado_id, estado_servicio=(SELECT nombre FROM `estados` where id=$estado_id) where id=$id_servicio ";
 		$result=$mysqli->query($sql);
 		
-		 echo json_encode(array("respuesta"=>"exito")); 
+		 echo json_encode(array("respuesta"=>"<strong>Exito!!</strong> Se ha ingresado el evento  exitosamente!","tipo"=>"success")); 
 		}else{
-			 echo json_encode(array("respuesta"=>"error:".$sql)); 
+			 echo json_encode(array("respuesta"=>"Error al grabar a la base de datos","tipo"=>"danger")); 
 			}
 		
 ?>

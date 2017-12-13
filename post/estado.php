@@ -11,8 +11,11 @@ $sql = "INSERT INTO `estados` (`nombre`, `color`) VALUES ( '$nombre', '$color')"
 
 		$result=$mysqli->query($sql);
 		 
-		
-		echo json_encode(array("respuesta"=>"exito")); 
-		 
+	 if ($mysqli->affected_rows>0){	
+		echo json_encode(array("respuesta"=>"<strong>Exito!!</strong> Se ha ingresado el estado exitosamente!","tipo"=>"success")); 
+	 }else
+	 {
+		   echo json_encode(array("respuesta"=>"error al grabar  ","tipo"=>"danger")); 
+		 }
 		
 ?>

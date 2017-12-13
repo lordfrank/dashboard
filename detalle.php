@@ -123,7 +123,9 @@
       <div class="row"></div>
 
       
-
+ <div class="col-md-12">
+          <div id="status">cargando ...</div>
+          </div>
 
     </div> <!-- /container -->
 
@@ -140,7 +142,7 @@
 </html>
 <script>
 
-
+getEstados();
 					
  $.ajax({
                 url:   "get/evento_detalle.php",
@@ -178,5 +180,38 @@
                 }
             });
 			
-		
+										function getEstados()
+			{
+				 $.ajax({
+                url:   "get/estados.php",
+                type:  "POST",
+                dataType: "json",
+                success:  function (r) 
+                {  
+					var salida="";
+					arr_estados=new Array();
+					for(var i = 0; i < r.estados.length; i++) 
+					{		 
+					     
+					 
+					 
+						var v = r.estados[i];
+
+						 if (v.estado=="activo"){
+						salida=salida+'&nbsp;<span class="badge badge-'+v.color+'">&nbsp;</span>&nbsp;'+v.nombre+'&nbsp;';
+						 }
+						
+								 		
+					}	
+				   $("#status").html(salida);
+				 
+					 			  
+				  },
+                error: function(e)
+                {
+                    alert("Ocurrio un error en el servidor .."+e);
+                }
+            });
+				
+				}
 </script>

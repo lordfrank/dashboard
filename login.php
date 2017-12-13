@@ -116,7 +116,7 @@ header('Location: adminDashboard.php');
             <li class="active"><a href="index.php">Home</a></li>
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opciones <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="login.php">Administrador</a></li>
                 <li role="separator" class="divider"></li>

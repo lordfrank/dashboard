@@ -20,10 +20,10 @@ $sql = "update  `servicio_eventos`  set `fecha`='$fecha $hora', `estado_evento`=
 	 
  if ($mysqli->affected_rows>0){
 		
-		 echo json_encode(array("respuesta"=>"exito")); 
+		 echo json_encode(array("respuesta"=>"<strong>Exito!!</strong> Se ha actualizado el estado exitosamente!","tipo"=>"success")); 
  }else
  {
-	  echo json_encode(array("respuesta"=>"error:")); 
+	  echo json_encode(array("respuesta"=>"No se ha realizado ninguna actualizacion","tipo"=>"info")); 
 	 }
 	 
 	   

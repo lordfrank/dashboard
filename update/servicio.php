@@ -13,10 +13,10 @@ $sql = "update  `servicios` set  `servicio`='$nombre', `estado`='$estado' where 
 		$result=$mysqli->query($sql);
 		 
 		
-		 echo json_encode(array("respuesta"=>"exito")); 
+		 echo json_encode(array("respuesta"=>"<strong>Exito!!</strong> Se ha actualizado el estado exitosamente!","tipo"=>"success")); 
 }else
 {
-	 echo json_encode(array("respuesta"=>"Error!!")); 
+	 echo json_encode(array("respuesta"=>"No se ha realizado ninguna actualizacion","tipo"=>"info")); 
 	 
 	}
 		

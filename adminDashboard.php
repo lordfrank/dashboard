@@ -280,7 +280,19 @@ if(isset($_SESSION["id"])){
           <button type="button" class="btn btn-deafult" onClick="eventos($('#m3'))">Cancelar</button> </form></div>      
       </div>  
     </div> <!-- /container -->
-
+  <div class="modal fade" id="alert" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="alert alert-succcess" id="msg">
+		  </div>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -365,7 +377,9 @@ function form_servicio(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor ..");
+					 $("#msg").removeClass().addClass("alert alert-info").html("error no se pudo ingresar a la BD");
+ $('#alert').modal("show");
                 }
             });
 	
@@ -404,7 +418,7 @@ function form_estado(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 			
@@ -460,7 +474,7 @@ function form_evento(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 }
@@ -516,7 +530,7 @@ function form_evento_add(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 }
@@ -593,14 +607,14 @@ function add_evento(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             })
 					 			  
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             })
 	
@@ -627,7 +641,7 @@ function fsc(data)
 			       }
 			if ( $("#nombre",$("#formestado")).val()=="")
 			{
-				alert("Complete el campo nombre , gracias");
+				fx_alert("info","Complete el campo nombre , gracias");
 				return false;
 				}
 				
@@ -639,12 +653,12 @@ function fsc(data)
                 success:  function (r) 
                 {  
 				estados($('#m2'));	
-				 alert(r.respuesta);
+				 fx_alert(r.tipo,r.respuesta);
 					 			  
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 				
@@ -663,7 +677,7 @@ function fsc(data)
 			
 				if ( $("#nombre",$("#formservicio")).val()=="")
 			{
-				alert("Complete el campo nombre , gracias");
+				fx_alert("info","Complete el campo nombre , gracias");
 				return false;
 				}
 				 $.ajax({
@@ -675,12 +689,12 @@ function fsc(data)
                 {  
 				 
 				servicios($('#m1'));	
-				 alert(r.respuesta);
+				 fx_alert(r.tipo,r.respuesta);
 					 			  
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 				
@@ -701,28 +715,28 @@ function fsc(data)
 			
 			if ( $("#servicio",$("#formevento")).val()=="")
 			{
-				alert("Complete el campo servicio , gracias");
+				fx_alert("info","Complete el campo servicio , gracias");
 				return false;
 			}
 			if ( $("#detalle",$("#formevento")).val()=="")
 			{
-				alert("Complete el campo detalle , gracias");
+				fx_alert("info","Complete el campo detalle , gracias");
 				return false;
 			}
 		 	if ( $("#fecha",$("#formevento")).val()=="")
 			{
-				alert("Complete el campo fecha , gracias");
+				fx_alert("info","Complete el campo fecha , gracias");
 				return false;
 			}
 			if ( $("#hora",$("#formevento")).val()=="")
 			{
-				alert("Complete el campo hora , gracias");
+				fx_alert("info","Complete el campo hora , gracias");
 				return false;
 			}
 			
 				if ( $("#estado_evento",$("#formevento")).val()=="")
 			{
-				alert("Complete el campo Estado evento , gracias");
+				fx_alert("info","Complete el campo Estado evento , gracias");
 				return false;
 			}
 			
@@ -735,12 +749,12 @@ function fsc(data)
                 {  
 				 getServicios();
 				eventos($('#m3'));	
-				 alert(r.respuesta);
+				 fx_alert(r.tipo,r.respuesta);
 					 			  
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                   fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 				
@@ -781,7 +795,7 @@ function fsc(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 				
@@ -822,7 +836,7 @@ function fsc(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 				
@@ -863,7 +877,7 @@ function fsc(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 				
@@ -906,7 +920,7 @@ function fsc(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 				
@@ -936,9 +950,15 @@ function fsc(data)
 				  },
                 error: function(e)
                 {
-                    alert("Ocurrio un error en el servidor .."+e);
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
                 }
             });
 				
 				}
+				
+function fx_alert(tipo,texto)
+{
+ $("#msg").removeClass().addClass("alert alert-"+tipo).html(texto);
+ $('#alert').modal("show");
+}
 </script>
