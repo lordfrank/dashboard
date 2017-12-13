@@ -262,7 +262,7 @@ if(isset($_SESSION["id"])){
           <div class="form-group"> <label for="">Evento</label> <select name="evento"  class="form-control" id="evento" placeholder="evento"><option value="">Nuevo evento</option> </select></div> 
                <div class="form-group"> <label for="">Detalle</label> <textarea name="detalle"  class="form-control" id="detalle" placeholder="detalle"></textarea> </div>    
               <div class="form-group"> <label for="">Fecha</label> 
-              (d-m-a)
+              (aaaa-mm-dd)-> sin calendario
                 <input type="date" name="fecha"  class="form-control" id="fecha"  > </div>
                <div class="form-group"> <label for="">Hora</label> 
                (hh:mm)
