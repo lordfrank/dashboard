@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="dashboard">
     <meta name="author" content="i-technology">
-    <title>DashBoard</title>
+    <title>CNR APP STATUS Dashboard</title>
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
@@ -68,7 +68,9 @@
   </head>
   <body>
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="header text-center"><img src="img/logo.png">
+    </div>
+    <nav class="navbar navbar-inverse ">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -77,13 +79,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">DashBoard</a>
+         
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.php">Home</a></li>
+            <li class="active"><a href="index.php">Dashboard</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">opciones <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrar <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="login.php">Administrador</a></li>
                 <li role="separator" class="divider"></li>                     
@@ -95,9 +97,65 @@
     </nav>
     <div class="container" role="main">
       <div class="page-header">
-        <h1>Status Dashboard</h1>
+        <h1>CNR APP STATUS Dashboard</h1>
       </div>
       <div class="row">
+      <div class"col-md-12">
+        <p>En esta página proporciona información sobre el estado de los servicios de CNR,  esta información de estado se refiere a los servicios para todos los usuarios que  requieran utilizar servicios en CNR. En cualquier momento puede consultar el  estado actual de los servicios que se muestran a continuación siendo estos  productos cubiertos de disponibilidad de CNR. Para obtener más información,  comunicarse con CNR al teléfono (56-2) 2 425 7990.<br>
+          Si desea contactarse con un servicio específico, se detalla a continuación:<br>
+        </p>
+        <button type="button" class="btn btn-primary pull-left"   data-toggle="modal" data-target="#detalle" >Ver Servicios</button><br>
+        <div id="detalle" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Detalle Servicios CNR</h4>
+      </div>
+      <div class="modal-body">
+       <ul>
+          <li>SEP:</li>
+          <ul>
+            <li>Proyectos  postulados a la ley18450:  revisionley18450@cnr.gob.cl</li>
+            <li>Proyectos ante  de postular a la ley18450:   </li>
+            <li>http://www3.cnr.gob.cl/entradadocal.aspx</li>
+            <li>Incidente/Requerimiento/Consulta  de sistema: Ingresar al SEP, ir a Consultas-&gt;Soporte-&gt;Nuevo Soporte</li>
+          </ul>
+          <li>ESIIR: </li>
+          <ul>
+            <li>Comunicarse  con CNR al teléfono (56-2) 2 425 7990 </li>
+          </ul>
+          <li>Unibox: </li>
+          <ul>
+            <li>Comunicarse  con CNR al teléfono (56-2) 2 425 7990 </li>
+          </ul>
+          <li>Intranet: </li>
+          <ul>
+            <li>Comunicarse  con CNR al teléfono (56-2) 2 425 7990 </li>
+          </ul>
+          <li>Aula  Virtual: </li>
+          <ul>
+            <li>Comunicarse  con CNR al teléfono (56-2) 2 425 7990 </li>
+          </ul>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+      </div>
+      </div>
+      <div class="row">
+      <div class="col-md-12 text-center" >
+      Última actualización: <span id="actualizacion">*</span>
+      </div>
+      </div>
+      <div class="row   separation">
         <div class="col-md-12">
         <table style="display:none" id="render"><tbody id="cuerpo"><tr>
        
@@ -141,7 +199,13 @@
           <div id="status">cargando ...</div>
           </div>
       </div>
-    </div> <!-- /container -->
+      <div class="panel-footer text-center">
+      Comisión Nacional de Riego - Avda. Libertador Bernardo O'Higgins 1449 Torre 1 Piso 4 Santiago. Fono : (56-2) 2 425 7990
+        <br>
+      Se recomienda utilizar para este sitio  Chrome / Firefox </div>
+  </div> 
+  
+  <!-- /container -->
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -276,7 +340,8 @@ var calendarioIndice=new Array();
 				data: "fechai="+ fechas.anterior,
                 success:  function (r) 
                 {  
-					var salida=""
+					var salida="";
+					$("#actualizacion").html(r.update);
 					for(var i = 0; i < r.eventos.length; i++) 
 					{	
 						var v = r.eventos[i];

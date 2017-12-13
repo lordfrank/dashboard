@@ -46,10 +46,10 @@ $sql = "SELECT * FROM `estados` order by id asc";
 				$salida2[]=$row;
 				} 
 		}
+		setlocale(LC_ALL, 'es_CL.UTF-8');
+	date_default_timezone_set("America/Santiago");	
 		
-		
-		
-		print json_encode(array("eventos"=>$salida,"estados"=>$salida2));
+		print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=>   strftime(" %e de %B de %G , %H:%M:%S ") ));
 		
 		
 ?>

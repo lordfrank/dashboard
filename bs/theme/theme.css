@@ -1,6 +1,6 @@
 body {
-  padding-top: 70px;
-  padding-bottom: 30px;
+
+  padding-bottom: 230px;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -16,3 +16,5 @@ body {
 .theme-showcase .navbar .container {
   width: auto;
 }
+
+.separation { padding-bottom  : 70px; }
