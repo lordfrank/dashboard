@@ -49,7 +49,8 @@ $sql="CREATE TABLE `servicio_eventos` (
   `detalle` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vigente',
   `estado_id` int(11) NOT NULL,
-  `evento_id` int(11) DEFAULT NULL
+  `evento_id` int(11) DEFAULT NULL,
+  `last` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
  

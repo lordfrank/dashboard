@@ -55,7 +55,7 @@ header('Location: adminDashboard.php');
     <meta name="author" content="i-technology">
  
 
-    <title>CNR APP STATUS Dashboard</title>
+    <title>Monitoreo de Servicios CNR</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">
@@ -122,7 +122,7 @@ header('Location: adminDashboard.php');
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.php">Dashboard</a></li>
+            <li><a href="index.php">Dashboard</a></li>
             
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrar <span class="caret"></span></a>

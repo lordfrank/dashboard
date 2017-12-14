@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="dashboard">
     <meta name="author" content="i-technology">
-    <title>CNR APP STATUS Dashboard</title>
+    <title>Monitoreo de Servicios CNR</title>
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
@@ -95,7 +95,7 @@
     </nav>
     <div class="container" role="main">
       <div class="page-header">
-        <h1>CNR APP STATUS Dashboard</h1>
+        <h1>Monitoreo de Servicios CNR</h1>
       </div>
       <div class="row">
       <div class"col-md-12">

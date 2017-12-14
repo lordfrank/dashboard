@@ -22,16 +22,18 @@ if(isset($_SESSION["id"])){
     <meta name="author" content="i-technology">
  
 
-    <title>CNR APP STATUS Dashboard</title>
+    <title>Monitoreo de Servicios CNR</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
     <link href="bs/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link id="bsdp-css" href="bs/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="bs/css/bootstrap-clockpicker.min.css">
     <!-- Custom styles for this template -->
     <link href="bs/theme/theme.css" rel="stylesheet">
 
- 
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -92,7 +94,7 @@ if(isset($_SESSION["id"])){
     <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="menu">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -101,7 +103,7 @@ if(isset($_SESSION["id"])){
          <a class="navbar-brand" href="#"><span class=" glyphicon glyphicon-user"></span> <?php echo $_SESSION["usuario"];?></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav" id="menu">
+          <ul class="nav navbar-nav  " id="menu">
             <li><a href="index.php">Dashboard</a></li>
             <li class="active"><a href="#" onclick="servicios(this)"  id="m1" >Servicios</a> </li>
             <li><a href="#"  id="m2" onclick="estados(this)">Estados</a></li>
@@ -122,7 +124,7 @@ if(isset($_SESSION["id"])){
 
     <div class="container separation" role="main">
       <div class="page-header">
-        <h1>CNR APP STATUS Dashboard Administrador</h1>
+        <h1>Monitoreo de Servicios CNR Administrador</h1>
       </div>
       <div class="row" id="divservicios">
      <div class="col-md-12"> <h2>Servicios</h2></div>
@@ -295,11 +297,11 @@ if(isset($_SESSION["id"])){
           <div class="form-group"> <label for="">Evento</label> <select name="evento"  class="form-control" id="evento" placeholder="evento"><option value="">Nuevo evento</option> </select></div> 
                <div class="form-group"> <label for="">Detalle</label> <textarea name="detalle"  class="form-control" id="detalle" placeholder="detalle"></textarea> </div>    
               <div class="form-group"> <label for="">Fecha</label> 
-              (aaaa-mm-dd)-> sin calendario
-                <input type="date" name="fecha"  class="form-control" id="fecha"  > </div>
+              (aaaa-mm-dd)
+                <input type="text" name="fecha"  readonly="true" class="form-control" id="fecha"  > </div>
                <div class="form-group"> <label for="">Hora</label> 
                (hh:mm)
-               <input type="time" name="hora"  class="form-control" id="hora"  > </div>
+               <input type="text" name="hora" readonly class="form-control" id="hora"  > </div>
                  <div class="form-group"> 
            <label for="estado_servicio">Estado Evento</label>
 	      <select class="form-control" id="estado_evento" name="estado_evento"   ></select> </div> 
@@ -342,7 +344,7 @@ if(isset($_SESSION["id"])){
         <button type="button" class="close" data-dismiss="modal">&times;</button>
           <div class="alert alert-succcess" id="msg">
 		  </div>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
@@ -357,7 +359,9 @@ if(isset($_SESSION["id"])){
     <script>window.jQuery || document.write('<script src="bs/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="bs/js/bootstrap.min.js"></script>
     <script src="bs/assets/js/docs.min.js"></script>
- 
+  <script src="bs/js/bootstrap-datepicker.min.js"></script>
+    <script src="bs/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+	<script src="bs/js/bootstrap-clockpicker.min.js"></script>
   </body>
 </html>
 <script>
@@ -373,12 +377,16 @@ function estados(data){
 	$(data).parent().addClass("active");
 	getEstados();
 	fx_div("#divestados");
+	$("#navbar").removeClass("in");
+	
 	}
 function servicios(data){
 	$(".active").removeClass("active");
 	$(data).parent().addClass("active");
 	getServicios();
 	fx_div("#divservicios");
+	$("#navbar").removeClass("in");
+
 	
 	}	
 function eventos(data){
@@ -386,12 +394,16 @@ function eventos(data){
 	$(data).parent().addClass("active");
 	getEventos();
 	fx_div("#diveventos");
+	$("#navbar").removeClass("in");
+
 	}
 	function usuarios(data){
 	$(".active").removeClass("active");
 	$(data).parent().addClass("active");
 	getUsuarios();
 	fx_div("#divusuarios");
+	$("#navbar").removeClass("in");
+
 	}
 function fx_div(data)
 {
@@ -528,6 +540,7 @@ function form_evento(data)
 						$("#evento",$("#formevento")).val(v.evento_id); 
 	                    $("#detalle",$("#formevento")).val(v.detalle);
 						$("#fecha",$("#formevento")).val(v.fechaformato);
+						$('#fecha').datepicker('update');
 						$("#hora",$("#formevento")).val(v.hora);
 						$("#estado_evento",$("#formevento")).val(v.estado_id);
 						 		 		
@@ -1167,4 +1180,15 @@ function fx_alert(tipo,texto)
  $("#msg").removeClass().addClass("alert alert-"+tipo).html(texto);
  $('#alert').modal("show");
 }
+
+$('#fecha').datepicker({
+	format: "yyyy-mm-dd",
+    todayBtn: "linked",
+    language: "es",
+	todayHighlight: true,
+    autoclose: true
+});
+$('#hora').clockpicker({
+    donetext: 'Listo'
+});
 </script>

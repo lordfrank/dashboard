@@ -47,9 +47,23 @@ $sql = "SELECT * FROM `estados` order by id asc";
 				} 
 		}
 		setlocale(LC_ALL, 'es_CL.UTF-8');
-	date_default_timezone_set("America/Santiago");	
+	date_default_timezone_set("America/Santiago");
 		
-		print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=>   strftime(" %e de %B de %G , %H:%M:%S ") ));
+$sql=	"SELECT if(max(last) is null,'Sin eventos recientes',UNIX_TIMESTAMP(max(last))) salida FROM `servicio_eventos` WHERE estado='vigente'";
+$result=$mysqli->query($sql);
+		$rows = $result->num_rows;
 		
+		if($rows > 0) {
+			while($row = $result->fetch_assoc())
+			{
+				$salida3=$row["salida"];
+				} 
+		}
+		if ($salida3!="Sin eventos recientes") {
+		print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=>   strftime(" %e de %B de %G , %H:%M:%S ",$salida3*1) ));
+		}else
+		{
+				print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=>  $salida3 ));	
+			}
 		
 ?>

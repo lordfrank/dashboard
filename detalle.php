@@ -10,7 +10,7 @@
     <meta name="author" content="i-technology">
  
 
-    <title>CNR APP STATUS Dashboard</title>
+    <title>Monitoreo de Servicios CNR</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">

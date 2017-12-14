@@ -3,4 +3,8 @@
 <file name="bootstrap.js" server="104.237.143.192/../../var/www/" local="131139500080000000" remote="131568655650000000" Dst="2" />
 <file name="bootstrap.min.js" server="104.237.143.192/../../var/www/" local="131139500100000000" remote="131568655660000000" Dst="2" />
 <file name="npm.js" server="104.237.143.192/../../var/www/" local="131139500100000000" remote="131568655670000000" Dst="2" />
+<file name="bootstrap-datepicker.js" server="104.237.143.192/../../var/www/" local="131148789800000000" remote="131577505110000000" Dst="2" />
+<file name="bootstrap-datepicker.min.js" server="104.237.143.192/../../var/www/" local="131148789800000000" remote="131577505110000000" Dst="2" />
+<file name="index.html" server="104.237.143.192/../../var/www/" local="131568682170000000" remote="131577505120000000" Dst="2" />
+<file name="bootstrap-clockpicker.min.js" server="104.237.143.192/../../var/www/" local="130518745540000000" remote="131577527010000000" Dst="2" />
 </dwsync>
