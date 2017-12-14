@@ -64,8 +64,7 @@ $sql="CREATE TABLE `usuarios` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 $result=$mysqli->query($sql);
  
-$sql="INSERT INTO `usuarios` (`id`, `login`, `pass`, `estado`,nombre) VALUES
-(1, 'admin', '".password_hash("temporal2017", PASSWORD_DEFAULT)."', 'vigente','super admin');";
+$sql="INSERT INTO `usuarios` (`id`, `login`, `pass`, `estado`,`nombre`) VALUES (1, 'admin', '".password_hash("temporal2017", PASSWORD_DEFAULT)."', 'vigente','super admin');";
 $salida=$salida."<br>insertando data  ...";
  $result=$mysqli->query($sql);
 $sql="ALTER TABLE `estados`
