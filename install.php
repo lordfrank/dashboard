@@ -2,13 +2,16 @@
 session_start();
 include("conection/config.php");
 
-
+	
 $go=mysqli_real_escape_string($mysqli,$_REQUEST['go']);
 
 if ($go=="go")
 {
 	$salida="<br>comenzando ...";
-
+$_SESSION['id'] = "";
+			$_SESSION['usuario'] = "";
+			$_SESSION['nombre'] = "";
+			$_SESSION['mail'] ="";
  
  
 $sql="DROP TABLE `estados`, `servicios`, `servicio_eventos`, `usuarios`;";
@@ -18,22 +21,22 @@ $sql="CREATE TABLE `estados` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `color` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estado` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activo'
+  `estado` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vigente'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
  $result=$mysqli->query($sql);
  $salida=$salida."<br>creando tablas ...";
 $sql="INSERT INTO `estados` (`id`, `nombre`, `color`, `estado`) VALUES
-(1, 'Sin problemas', 'success', 'activo'),
-(2, 'Interrupción del servicio', 'warning', 'activo'),
-(3, 'Suspensión temporal del servicio', 'error', 'activo');";
+(1, 'Sin problemas', 'success', 'vigente'),
+(2, 'Interrupción del servicio', 'warning', 'vigente'),
+(3, 'Suspensión temporal del servicio', 'error', 'vigente');";
 
 $result=$mysqli->query($sql); 
 $sql="CREATE TABLE `servicios` (
   `id` int(10) UNSIGNED NOT NULL,
   `servicio` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado_servicio` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estado` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activo',
+  `estado` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vigente',
   `estado_id` int(9) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
@@ -44,7 +47,7 @@ $sql="CREATE TABLE `servicio_eventos` (
   `fecha` datetime NOT NULL,
   `estado_evento` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `detalle` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estado` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activo',
+  `estado` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vigente',
   `estado_id` int(11) NOT NULL,
   `evento_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
@@ -55,12 +58,14 @@ $sql="CREATE TABLE `usuarios` (
   `id` int(9) UNSIGNED NOT NULL,
   `login` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pass` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estado` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activo'
+  `estado` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vigente',
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 $result=$mysqli->query($sql);
  
-$sql="INSERT INTO `usuarios` (`id`, `login`, `pass`, `estado`) VALUES
-(1, 'admin', 'c20420738bb92c2c09ab9c2ed66a6536047b7b9d', 'activo');";
+$sql="INSERT INTO `usuarios` (`id`, `login`, `pass`, `estado`,nombre) VALUES
+(1, 'admin', '".password_hash("temporal2017", PASSWORD_DEFAULT)."', 'vigente','super admin');";
 $salida=$salida."<br>insertando data  ...";
  $result=$mysqli->query($sql);
 $sql="ALTER TABLE `estados`
@@ -100,7 +105,7 @@ $sql="ALTER TABLE `usuarios`
  $result=$mysqli->query($sql);
 
 
-$salida=$salida."<br>finalizando ...";
+$salida=$salida."<br>fin rutina";
 $exito=1;
 }
 ?>
@@ -170,7 +175,7 @@ $exito=1;
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse ">
       <div class="container">
         <div class="navbar-header">
  

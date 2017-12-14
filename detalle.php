@@ -10,7 +10,7 @@
     <meta name="author" content="i-technology">
  
 
-    <title>DashBoard</title>
+    <title>CNR APP STATUS Dashboard</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">
@@ -62,9 +62,9 @@
   </head>
 
   <body>
-
+<?php include("include/header.php");?>
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -73,14 +73,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">DashBoard</a>
+    
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.php">Home</a></li>
+            <li class="active"><a href="index.php">Dashboard</a></li>
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">opciones <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrar <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="login.php">Administrador</a></li>
               
@@ -93,7 +93,7 @@
       </div>
     </nav>
 
-    <div class="container" role="main">
+    <div class="container separation" role="main">
 
 
       <div class="page-header">
@@ -128,7 +128,7 @@
           </div>
 
     </div> <!-- /container -->
-
+<?php include("include/footer.php");?>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -160,7 +160,7 @@ getEstados();
 					      var aux=$(cuerpo);
 						
 						var v = r.eventos[i];
-						if (v.estado="activo") {
+						if (v.estado="vigente") {
 				$("#s1",aux).html(v.fecha);
 				$("#e1",aux).html(v.detalle);
 						$("#estado",aux).addClass("badge-"+v.color);
@@ -197,7 +197,7 @@ getEstados();
 					 
 						var v = r.estados[i];
 
-						 if (v.estado=="activo"){
+						 if (v.estado=="vigente"){
 						salida=salida+'&nbsp;<span class="badge badge-'+v.color+'">&nbsp;</span>&nbsp;'+v.nombre+'&nbsp;';
 						 }
 						

@@ -10,17 +10,24 @@ include("conection/config.php");
 		$password = mysqli_real_escape_string($mysqli,$_REQUEST['password']);
 		$error = '';
 		
-		$sha1_pass = sha1($password);
+	
 		
-		$sql = "SELECT id, login FROM  usuarios  WHERE login  = '$usuario' AND pass = '$sha1_pass'";
+		$sql = "SELECT id, login,nombre, mail, pass FROM  usuarios  WHERE login  = '$usuario' and estado='vigente'";
 		$result=$mysqli->query($sql);
 		$rows = $result->num_rows;
 	
 		if($rows > 0) {
+		 
 			$row = $result->fetch_assoc();
+			if (password_verify($password, $row['pass'])){
 			$_SESSION['id'] = $row['id'];
 			$_SESSION['usuario'] = $row['login'];
+			$_SESSION['nombre'] = $row['nombre'];
+			$_SESSION['mail'] = $row['mail'];
 		header('Location: adminDashboard.php');
+			}else
+			{$error = "El nombre o contraseña son incorrectos";
+				}
 			} else {
 			$error = "El nombre o contraseña son incorrectos";
 			
@@ -28,7 +35,9 @@ include("conection/config.php");
 	}
 
 if(isset($_SESSION["id"])){
+	if ($_SESSION["id"]*1>0){
 header('Location: adminDashboard.php');
+	}
 }
 
 
@@ -46,7 +55,7 @@ header('Location: adminDashboard.php');
     <meta name="author" content="i-technology">
  
 
-    <title>DashBoard</title>
+    <title>CNR APP STATUS Dashboard</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">
@@ -98,9 +107,9 @@ header('Location: adminDashboard.php');
   </head>
 
   <body>
-
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+<?php include("include/header.php"); ?>
+  <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse ">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -109,14 +118,14 @@ header('Location: adminDashboard.php');
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">DashBoard</a>
+ 
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.php">Home</a></li>
+            <li class="active"><a href="index.php">Dashboard</a></li>
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opciones <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrar <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="login.php">Administrador</a></li>
                 <li role="separator" class="divider"></li>
@@ -127,7 +136,7 @@ header('Location: adminDashboard.php');
       </div>
     </nav>
 
-    <div class="container" role="main">
+    <div class="container separation" role="main">
 
 
       <div class="page-header">
@@ -142,9 +151,9 @@ header('Location: adminDashboard.php');
 
 
     </div> <!-- /container -->
+<?php include("include/footer.php");?>
 
-
-    <!-- Bootstrap core JavaScript
+  <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -154,40 +163,3 @@ header('Location: adminDashboard.php');
  
   </body>
 </html>
-<script>
-
-
-					
- $.ajax({
-                url:   "get/evento_detalle.php",
-                type:  "POST",
-                dataType: "json",
-				data:"codigo="+<?php echo $_REQUEST["codigo"]*1?>,
-                success:  function (r) 
-                {  
-					var j=1;
-		            var salida="";
-					for(var i = 0; i < r.eventos.length; i++) 
-					{
-						var cuerpo=$("#render").html();
-					      var aux=$(cuerpo);
-						
-						var v = r.eventos[i];
-				$("#s1",aux).html(v.fecha);
-				$("#e1",aux).html(v.detalle);
-						$("#estado",aux).addClass("badge-"+v.color);
-						salida=salida+"<tr>"+$(aux).html()+"</tr>"; 
-					}	
-					$("#cuerpo",$("#dash")).html(salida);
-					$("#dash").show('slow');
-					 
-					   
-				  },
-                error: function(e)
-                {
-                    alert("Ocurrio un error en el servidor .."+e);
-                }
-            });
-			
-		
-</script>

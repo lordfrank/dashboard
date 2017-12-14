@@ -1,6 +1,10 @@
 <?php
 include("../conection/config.php");
+session_start();
 
+if ($_SESSION['id']*1<1) {
+	echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
+	}
 $salida=array();
 
 

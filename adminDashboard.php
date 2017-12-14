@@ -22,7 +22,7 @@ if(isset($_SESSION["id"])){
     <meta name="author" content="i-technology">
  
 
-    <title>administrador</title>
+    <title>CNR APP STATUS Dashboard</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">
@@ -88,8 +88,8 @@ if(isset($_SESSION["id"])){
 
   <body>
 
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <?php include("include/header.php"); ?>
+    <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -98,19 +98,21 @@ if(isset($_SESSION["id"])){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">DashBoard</a>
+         <a class="navbar-brand" href="#"><span class=" glyphicon glyphicon-user"></span> <?php echo $_SESSION["usuario"];?></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav" id="menu">
-            <li><a href="index.php">Home</a></li>
+            <li><a href="index.php">Dashboard</a></li>
             <li class="active"><a href="#" onclick="servicios(this)"  id="m1" >Servicios</a> </li>
             <li><a href="#"  id="m2" onclick="estados(this)">Estados</a></li>
             <li><a href="#"  id="m3"  onclick="eventos(this)">Eventos</a></li>
+            <li><a href="#"  id="m4"  onclick="usuarios(this)">Usuarios</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opciones <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrar <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="login.php">Administrador</a></li>
                 <li role="separator" class="divider"></li>
+                <li><a href="salir.php">Salir</a></li>
               </ul>
             </li>
           </ul>
@@ -118,9 +120,9 @@ if(isset($_SESSION["id"])){
       </div>
     </nav>
 
-    <div class="container" role="main">
+    <div class="container separation" role="main">
       <div class="page-header">
-        <h1>Dashboard Administrador</h1>
+        <h1>CNR APP STATUS Dashboard Administrador</h1>
       </div>
       <div class="row" id="divservicios">
      <div class="col-md-12"> <h2>Servicios</h2></div>
@@ -214,6 +216,37 @@ if(isset($_SESSION["id"])){
           </table>
         </div>
       </div>
+          <div class="row" id="divusuarios" style="display:none" >
+     <div class="col-md-12"> <h2>Usuarios</h2></div>
+        <div class="col-md-12" ><button type="button" class="btn btn-success pull-left" onclick="add_usuario()"  >Nuevo</button></div>
+        <div class="col-md-12">
+        <table style="display:none" id="renderUsuario"><tbody id="cuerpo"><tr>
+        <td id="e1"></td>
+                <td id="e2"></td>
+                <td id="e3"></td>
+                <td id="e4"></td>
+                 <td id="e5"></td>
+                <td id="e6"><span class="btn btn-default glyphicon glyphicon-cog" onclick="form_usuario(this)"></span></td>
+              </tr>
+              </tbody>
+              </table>
+          <table class="table " id="dash">
+            <thead>
+              <tr>
+                <th>Codigo</th>
+                <th>Login</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Configuración</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpotabla">           
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
      	<div id="formservicio" style="display:none"> 
          <div class="col-md-12"> <h2>Servicios</h2></div>
           <div class="col-md-12">
@@ -221,8 +254,8 @@ if(isset($_SESSION["id"])){
 	      <input type="text" class="form-control" id="nombre" name="nombre"  placeholder="servicio"> </div>   
             <div class="form-group update" > <label for="login">Estado</label>
 	      <select class="form-control" id="estado" name="estado">
-          <option value="activo">activo</option>
-          <option value="eliminado">eliminado</option>
+          <option value="vigente">vigente</option>
+          <option value="no vigente">no vigente</option>
           </select> </div>   
          <input type="hidden"  name="id"  class="form-control" id="id"  >  
           <button type="button" class="btn btn-primary"  onClick="grabar_servicio()">Grabar</button>
@@ -242,8 +275,8 @@ if(isset($_SESSION["id"])){
           </div> 
           <div class="form-group update" > <label for="login">Estado</label>
 	      <select class="form-control" id="estado" name="estado">
-          <option value="activo">activo</option>
-          <option value="eliminado">eliminado</option>
+          <option value="vigente">vigente</option>
+          <option value="no vigente">no vigente</option>
           </select> </div>   
          <input type="hidden"  name="id"  class="form-control" id="id"  >  
         <button type="button" class="btn btn-primary"  onClick="grabar_estado()">Grabar</button> 
@@ -272,13 +305,35 @@ if(isset($_SESSION["id"])){
 	      <select class="form-control" id="estado_evento" name="estado_evento"   ></select> </div> 
            <div class="form-group update2"  style="display:none"> <label  >Estado</label>
 	      <select class="form-control" id="estado" name="estado">
-          <option value="activo">activo</option>
-          <option value="eliminado">eliminado</option>
+          <option value="vigente">vigente</option>
+          <option value="no vigente">no vigente</option>
           </select> </div>   
          <input type="hidden"  name="id"  class="form-control" id="id"  > 
           <button type="button" class="btn btn-primary" onClick="grabar_evento()">Grabar</button>
           <button type="button" class="btn btn-deafult" onClick="eventos($('#m3'))">Cancelar</button> </form></div>      
       </div>  
+      	<div id="formusuario" style="display:none"> 
+         <div class="col-md-12"> <h2>Usuarios</h2></div>
+          <div class="col-md-12">
+         <form action="post/usuario.php" method="post" id="form"> 
+         <div class="form-group"> <label for="login">Login</label>
+	      <input type="text" class="form-control" id="login" name="login"  placeholder="login"> </div> 
+          <div class="form-group"> <label for="password">Password</label>
+	      <input type="text" class="form-control" id="password" name="password"  placeholder="contraseña"> </div> 
+         <div class="form-group"> <label for="nombre">Nombre</label>
+	      <input type="text" class="form-control" id="nombre" name="nombre"  placeholder="nombre"> </div>   
+               <div class="form-group"> <label for="email">Email</label>
+	      <input type="text" class="form-control" id="mail" name="mail"  placeholder="correo electronico"> </div>   
+            <div class="form-group update" > <label for="login">Estado</label>
+	      <select class="form-control" id="estado" name="estado">
+          <option value="vigente">vigente</option>
+          <option value="no vigente">no vigente</option>
+          </select> </div>   
+         <input type="hidden"  name="id"  class="form-control" id="id"  >  
+          <button type="button" class="btn btn-primary"  onClick="grabar_usuario()">Grabar</button>
+           <button type="button" class="btn btn-deafult" onClick="usuarios($('#m4'))">Cancelar</button></form>  
+           </div>
+           </div>
     </div> <!-- /container -->
   <div class="modal fade" id="alert" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -292,6 +347,7 @@ if(isset($_SESSION["id"])){
       </div>
     </div>
   </div>
+  <?php include("include/footer.php"); ?>
 </div>
 
     <!-- Bootstrap core JavaScript
@@ -331,14 +387,22 @@ function eventos(data){
 	getEventos();
 	fx_div("#diveventos");
 	}
+	function usuarios(data){
+	$(".active").removeClass("active");
+	$(data).parent().addClass("active");
+	getUsuarios();
+	fx_div("#divusuarios");
+	}
 function fx_div(data)
 {
 	$("#diveventos").hide();
 	$("#divestados").hide();
 	$("#divservicios").hide();
+	$("#divusuarios").hide();
 	$("#formevento").hide();
 	$("#formestado").hide();
 	$("#formservicio").hide();
+	$("#formusuario").hide();
 	
 	$(data).show();
 	}	
@@ -479,6 +543,45 @@ function form_evento(data)
             });
 }
 
+function form_usuario(data)	 
+{
+	aux=$(data).parent().parent();
+
+		 $.ajax({
+                url:   "get/usuarios.php",
+                type:  "POST",
+                dataType: "json",
+				data: "id="+$("#e1",$(aux)).html(),
+                success:  function (r) 
+                {   
+					 
+				
+					for(var i = 0; i < r.usuarios.length; i++) 
+					{		
+					   
+					 
+					 
+						var v = r.usuarios[i];
+
+						
+						$("#id",$("#formusuario")).val(v.id);
+						$("#nombre",$("#formusuario")).val(v.nombre);
+						$("#estado",$("#formusuario")).val(v.estado); 
+	                    $("#login",$("#formusuario")).val(v.login);
+						$("#mail",$("#formusuario")).val(v.mail);
+
+					}	
+				  
+				 	 $(".update",$("#formusuario")).show();
+					fx_div("#formusuario"); 			  
+				  },
+                error: function(e)
+                {
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
+                }
+            });
+			
+}
 
 function form_evento_add(data)	 
 {
@@ -541,7 +644,7 @@ function add_servicio()
 	$(".update",$("#formservicio")).hide();
 	$("#id",$("#formservicio")).val("");
 	$("#nombre",$("#formservicio")).val("");
-	$("#estado",$("#formservicio")).val("activo"); 
+	$("#estado",$("#formservicio")).val("vigente"); 
 	fx_div("#formservicio");
 }
 function add_estado(data)	 
@@ -574,7 +677,7 @@ function add_evento(data)
 					{		
 						var v = r.servicios[i];
 
-						if (v.estado=='activo'){
+						if (v.estado=='vigente'){
 				 
 						salida=salida+"<option value='"+v.id+"'>"+v.servicio+"</option>";
 						}							 		
@@ -592,7 +695,7 @@ function add_evento(data)
 					{		
 						var v = r.estados[i];
 
-						if (v.estado=='activo'){
+						if (v.estado=='vigente'){
 				 
 						salida=salida+"<option value='"+v.id+"'>"+v.nombre+"</option>";
 						}
@@ -619,7 +722,17 @@ function add_evento(data)
             })
 	
 }
-
+function add_usuario()	 
+{
+	$(".update",$("#formusuario")).hide();
+	$("#id",$("#formusuario")).val("");
+	$("#nombre",$("#formusuario")).val("");
+	$("#login",$("#formusuario")).val("");
+	$("#mail",$("#formusuario")).val("");
+	$("#password",$("#formusuario")).val("");
+	$("#estado",$("#formusuario")).val("vigente"); 
+	fx_div("#formusuario");
+}
 function fsc(data)
 {   $('#color').val(data);
 	$("#selcolor").removeClass();
@@ -759,6 +872,59 @@ function fsc(data)
             });
 				
 			}
+				
+	function grabar_usuario()
+			{
+				
+				
+				id=$("#id",$("#formusuario")).val();
+				url="post/usuario.php";
+				
+				if (id*1>0) {
+					url="update/usuario.php";
+	
+			}
+			
+				if ( $("#login",$("#formusuario")).val()=="")
+			{
+				fx_alert("info","Complete el campo login , gracias");
+				return false;
+			}
+				
+					if (id*1==0) {
+					if ( $("#password",$("#formusuario")).val()=="")
+			{
+				fx_alert("info","Complete el campo password , gracias");
+				return false;
+			}
+	
+			}
+				if ( $("#nombre",$("#formusuario")).val()=="")
+			{
+				fx_alert("info","Complete el campo nombre , gracias");
+				return false;
+			}
+				 $.ajax({
+                url:  url ,
+                type:  "POST",
+                dataType: "json",
+				data: $("#form",$("#formusuario")).serialize(),
+                success:  function (r) 
+                {  
+				 
+				usuarios($('#m4'));	
+				 fx_alert(r.tipo,r.respuesta);
+					 			  
+				  },
+                error: function(e)
+                {
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
+                }
+            });
+				
+	
+				
+			}				
 					
 			function getCalendario(fecha)
 			{
@@ -926,6 +1092,46 @@ function fsc(data)
 				
 				}
 				
+					function getUsuarios()
+			{
+				 $.ajax({
+                url:   "get/usuarios.php",
+                type:  "POST",
+                dataType: "json",
+                success:  function (r) 
+                {  
+					var salida="";
+					 
+					for(var i = 0; i < r.usuarios.length; i++) 
+					{		var cuerpo=$("#cuerpo",$("#renderUsuario")).html();
+					      var aux=$(cuerpo);
+					 
+					 
+						var v = r.usuarios[i];
+
+						
+						$("#e1",aux).html(v.id);
+						$("#e2",aux).html(v.login);
+						$("#e3",aux).html(v.nombre);
+						$("#e4",aux).html(v.mail);
+						$("#e5",aux).html(v.estado);
+					 
+						
+						salida=salida+"<tr>"+$(aux).html()+"</tr>";
+						
+							 		
+					}	
+				   $("#cuerpotabla",$("#divusuarios")).html(salida);
+				 
+					 			  
+				  },
+                error: function(e)
+                {
+                    fx_alert("danger","Ocurrio un error en el servidor .."+e);
+                }
+            });
+				
+				}
 				function cambioServicio(data)
 				{
 									 $.ajax({

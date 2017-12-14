@@ -67,9 +67,7 @@
 	</style>
   </head>
   <body>
-    <!-- Fixed navbar -->
-    <div class="header text-center"><img src="img/logo.png">
-    </div>
+<?php include("include/header.php"); ?>
     <nav class="navbar navbar-inverse ">
       <div class="container">
         <div class="navbar-header">
@@ -199,10 +197,7 @@
           <div id="status">cargando ...</div>
           </div>
       </div>
-      <div class="panel-footer text-center">
-      Comisión Nacional de Riego - Avda. Libertador Bernardo O'Higgins 1449 Torre 1 Piso 4 Santiago. Fono : (56-2) 2 425 7990
-        <br>
-      Se recomienda utilizar para este sitio  Chrome / Firefox </div>
+<?php include("include/footer.php");?>
   </div> 
   
   <!-- /container -->
@@ -311,7 +306,7 @@ var calendarioIndice=new Array();
 					for(var i = 0; i < r.servicios.length; i++) 
 					{	
 					    var v = r.servicios[i];
-						if (v.estado=="activo"){
+						if (v.estado=="vigente"){
 							var cuerpo=$("#cuerpo",$("#render")).html();
 							var aux=$(cuerpo);
 							$("#s1",aux).html(v.servicio);
@@ -345,7 +340,7 @@ var calendarioIndice=new Array();
 					for(var i = 0; i < r.eventos.length; i++) 
 					{	
 						var v = r.eventos[i];
-						if (v.estado=="activo"){
+						if (v.estado=="vigente"){
 							var cuerpo=$("#render_evento").html();
 							var aux=$(cuerpo);						
 							indice=calendarioIndice[v.original];
@@ -383,7 +378,7 @@ var calendarioIndice=new Array();
 					 
 						var v = r.estados[i];
 
-						 if (v.estado=="activo"){
+						 if (v.estado=="vigente"){
 						salida=salida+'&nbsp;<span class="badge badge-'+v.color+'">&nbsp;</span>&nbsp;'+v.nombre+'&nbsp;';
 						 }
 						
