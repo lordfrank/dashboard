@@ -59,8 +59,8 @@ $sql="CREATE TABLE `usuarios` (
   `login` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pass` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vigente',
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci  NULL,
+  `mail` varchar(100) COLLATE utf8mb4_unicode_ci  NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 $result=$mysqli->query($sql);
  
