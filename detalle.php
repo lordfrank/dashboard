@@ -98,7 +98,7 @@
 
       <div class="page-header">
         <h1>Detalles del servicio <span id="s1"></span></h1>
-        <div class="col-md-12">
+        <div class="col-md-12 separation">
           <table style="display:none" id="render">
             <tbody id="cuerpo">
               <tr>
