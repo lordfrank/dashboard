@@ -97,8 +97,11 @@
 
 
       <div class="page-header">
-        <h1>Detalles del servicio <span id="s1"></span></h1>
-        <div class="col-md-12 separation">
+        <h2>Detalles del servicio <span id="s1"></span></h2>
+
+      </div>
+      <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 separation">
           <table style="display:none" id="render">
             <tbody id="cuerpo">
               <tr>
@@ -107,10 +110,10 @@
               </tr>
             </tbody>
           </table>
-
+<div class="table-responsive">
           <table class="table " id="dash">
             <thead>
-              <tr>
+              <tr class="active">
                 <th>Hora</th>
                 <th>Descripción</th>
               </tr>
@@ -118,12 +121,10 @@
             <tbody id="cuerpo">
             </tbody>
           </table>
-        </div>
-      </div>
-      <div class="row"></div>
+       </div> </div></div>
 
       
- <div class="col-md-12">
+ <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
           <div id="status">cargando ...</div>
           </div>
 

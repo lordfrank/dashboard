@@ -95,14 +95,14 @@
     </nav>
     <div class="container" role="main">
       <div class="page-header">
-        <h1>Monitoreo de Servicios CNR</h1>
+        <h2>Monitoreo de Servicios CNR</h2>
       </div>
-      <div class="row">
-      <div class"col-md-12">
+      <div class="page">
+      <div class"col-md-12 col-sm-12 col-xs-12 col-lg-12">
         <p>En esta página proporciona información sobre el estado de los servicios de CNR,  esta información de estado se refiere a los servicios para todos los usuarios que  requieran utilizar servicios en CNR. En cualquier momento puede consultar el  estado actual de los servicios que se muestran a continuación siendo estos  productos cubiertos de disponibilidad de CNR. Para obtener más información,  comunicarse con CNR al teléfono (56-2) 2 425 7990.<br>
           Si desea contactarse con un servicio específico, se detalla a continuación:<br>
         </p>
-        <button type="button" class="btn btn-primary pull-left"   data-toggle="modal" data-target="#detalle" >Ver Servicios</button><br>
+        <button type="button" class="btn btn-primary"   data-toggle="modal" data-target="#detalle" >Ver Servicios</button><br>
         <div id="detalle" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -154,7 +154,8 @@
       </div>
       </div>
       <div class="row   separation">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+        
         <table style="display:none" id="render"><tbody id="cuerpo"><tr>
        
                 <td><span class="badge" id="estado">&nbsp;</span> <span id="s1"></span></td>
@@ -168,12 +169,14 @@
               </tr>
               </tbody>
               </table>
+             
               <div style="display:none" id="render_evento">
               <div><a href="detalle.php" id="link" title=""><span title="" class="badge" id="estado">&nbsp;</span></a></div>
               </div>
+              <div class="table-responsive">
           <table class="table " id="dash">
             <thead>
-              <tr>
+              <tr class="active">
                 <th>Estado Actual</th>
                 <th id="d1"></th>
                 <th id="d2"></th>
@@ -191,9 +194,10 @@
             <td colspan=8>  <button id="siguiente" type="button" class="btn btn-default pull-right" onClick="fx_siguiente()">Siguiente >></button> <button type="button" class="btn btn-default pull-right" onClick="fx_anterior()" id="anterior"><< Anterior </button> </td>
               </tr>
             </tfoot>
-          </table>      
+          </table>    
+          </div>  
         </div>
-          <div class="col-md-12">
+          <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
           <div id="status">cargando ...</div>
           </div>
       </div>

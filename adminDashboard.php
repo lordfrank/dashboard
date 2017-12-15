@@ -41,6 +41,14 @@ if(isset($_SESSION["id"])){
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
+	h1{
+     word-wrap: break-word;
+     -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+     -ms-hyphens: auto;
+     -o-hyphens: auto;
+     hyphens: auto;
+}
 	#dash{  }
 		.badge-red {
   background-color: red;
@@ -124,12 +132,14 @@ if(isset($_SESSION["id"])){
 
     <div class="container separation" role="main">
       <div class="page-header">
-        <h1>Monitoreo de Servicios CNR Administrador</h1>
+        <h3>Monitoreo de Servicios CNR Administrador</h3>
       </div>
       <div class="row" id="divservicios">
-     <div class="col-md-12"> <h2>Servicios</h2></div>
-     <div class="col-md-12" ><button type="button" class="btn btn-success pull-left" onclick="add_servicio()" id="anterior">Nuevo</button></div>
-        <div class="col-md-12">
+     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12"> <h3>Servicios</h3></div>
+     
+     
+     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" ><button type="button" class="btn btn-success  " onclick="add_servicio()"  >Nuevo</button></div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
         <table style="display:none" id="renderServicio"><tbody id="cuerpo"><tr>
         <td id="e1"></td>
                 <td id="e2"></td>
@@ -139,9 +149,10 @@ if(isset($_SESSION["id"])){
               </tr>
               </tbody>
               </table>
+              <div class="table-responsive">
           <table class="table " id="dash">
             <thead>
-              <tr>
+              <tr class="panel-footer">
                 <th>Codigo</th>
                 <th>Servicio</th>
                 <th>Estado  actual</th>
@@ -152,12 +163,13 @@ if(isset($_SESSION["id"])){
             <tbody id="cuerpotabla">           
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     <div class="row" id="divestados" style="display:none" >
-     <div class="col-md-12"> <h2>Estados</h2></div>
-        <div class="col-md-12" ><button type="button" class="btn btn-success pull-left" onclick="add_estado()" id="anterior">Nuevo</button></div>
-        <div class="col-md-12">
+     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12"> <h3>Estados</h3></div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" ><button type="button" class="btn btn-success" onclick="add_estado()" >Nuevo</button></div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
         <table style="display:none" id="renderEstado"><tbody id="cuerpo"><tr>
         <td id="e1"></td>
                 <td id="e2"></td>
@@ -167,9 +179,10 @@ if(isset($_SESSION["id"])){
               </tr>
               </tbody>
               </table>
+              <div class="table-responsive">
           <table class="table " id="dash">
             <thead>
-              <tr>
+              <tr class="panel-footer">
                 <th>Codigo</th>
                 <th>Nombre</th>
                 <th>Color</th>
@@ -180,13 +193,14 @@ if(isset($_SESSION["id"])){
             <tbody id="cuerpotabla">           
             </tbody>
           </table>
+          </div>
         </div>
       </div>
                      
     <div class="row" id="diveventos" style="display:none" >
-     <div class="col-md-12"> <h2>Eventos</h2></div>
-        <div class="col-md-12" ><button type="button" class="btn btn-success pull-left" onclick="add_evento()" id="anterior">Nuevo</button></div>
-        <div class="col-md-12">
+     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12"> <h3>Eventos</h3></div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" ><button type="button" class="btn btn-success" onclick="add_evento()">Nuevo</button></div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
         <table style="display:none" id="renderEvento"><tbody id="cuerpo"><tr>
         <td id="e1"></td>
                 <td id="e2"></td>
@@ -200,9 +214,10 @@ if(isset($_SESSION["id"])){
               </tr>
               </tbody>
               </table>
+              <div class="table-responsive">
           <table class="table " id="dash">
             <thead>
-              <tr>
+              <tr class="panel-footer">
                 <th>Codigo</th>
                 <th>Servicio</th>
                 <th>Detalle</th>
@@ -216,12 +231,13 @@ if(isset($_SESSION["id"])){
             <tbody id="cuerpotabla">           
             </tbody>
           </table>
+          </div>
         </div>
       </div>
           <div class="row" id="divusuarios" style="display:none" >
-     <div class="col-md-12"> <h2>Usuarios</h2></div>
-        <div class="col-md-12" ><button type="button" class="btn btn-success pull-left" onclick="add_usuario()"  >Nuevo</button></div>
-        <div class="col-md-12">
+     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12"> <h3>Usuarios</h3></div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" ><button type="button" class="btn btn-success " onclick="add_usuario()"  >Nuevo</button></div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
         <table style="display:none" id="renderUsuario"><tbody id="cuerpo"><tr>
         <td id="e1"></td>
                 <td id="e2"></td>
@@ -232,9 +248,10 @@ if(isset($_SESSION["id"])){
               </tr>
               </tbody>
               </table>
+              <div class="table-responsive">
           <table class="table " id="dash">
             <thead>
-              <tr>
+              <tr class="panel-footer">
                 <th>Codigo</th>
                 <th>Login</th>
                 <th>Nombre</th>
@@ -246,11 +263,12 @@ if(isset($_SESSION["id"])){
             <tbody id="cuerpotabla">           
             </tbody>
           </table>
+          </div>
         </div>
       </div>
       
      	<div id="formservicio" style="display:none"> 
-         <div class="col-md-12"> <h2>Servicios</h2></div>
+         <div class="col-md-12"> <h3>Servicios</h3></div>
           <div class="col-md-12">
          <form action="post/servicio.php" method="post" id="form"> <div class="form-group"> <label for="login">Nombre</label>
 	      <input type="text" class="form-control" id="nombre" name="nombre"  placeholder="servicio"> </div>   
@@ -266,7 +284,7 @@ if(isset($_SESSION["id"])){
            </div>  
           
      <div id="formestado" style="display:none"> 
-        <div class="col-md-12"> <h2>Estados</h2></div>
+        <div class="col-md-12"> <h3>Estados</h3></div>
           <div class="col-md-12">
         <form action="post/estado.php" method="post" id="form">
         <div class="form-group"> <label for="login">Nombre</label>
@@ -288,7 +306,7 @@ if(isset($_SESSION["id"])){
         </div>
                 
     <div id="formevento" style="display:none">
-          <div class="col-md-12"> <h2>Eventos</h2></div>
+          <div class="col-md-12"> <h3>Eventos</h3></div>
           <div class="col-md-12">
            <form action="post/evento.php" method="post" id="form"> 
            <div class="form-group"> 
@@ -315,7 +333,7 @@ if(isset($_SESSION["id"])){
           <button type="button" class="btn btn-deafult" onClick="eventos($('#m3'))">Cancelar</button> </form></div>      
       </div>  
       	<div id="formusuario" style="display:none"> 
-         <div class="col-md-12"> <h2>Usuarios</h2></div>
+         <div class="col-md-12"> <h3>Usuarios</h3></div>
           <div class="col-md-12">
          <form action="post/usuario.php" method="post" id="form"> 
          <div class="form-group"> <label for="login">Login</label>

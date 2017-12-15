@@ -140,7 +140,7 @@ header('Location: adminDashboard.php');
 
 
       <div class="page-header">
-        <h1>Administrador</h1>
+        <h2>Administrador</h2>
       </div>
    
 
