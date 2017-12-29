@@ -1,4 +1,6 @@
 <?php 
+// hola 
+// hola 
 session_start();
 include("conection/config.php");
 
