@@ -5,11 +5,9 @@ if(isset($_SESSION["id"])){
 
 }else{
 	
-	header('Location: login.php');
-	}
+header('Location: login.php');
+}
 	
-	
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,10 +18,7 @@ if(isset($_SESSION["id"])){
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="dashboard">
     <meta name="author" content="i-technology">
- 
-
     <title>Monitoreo de Servicios CNR</title>
-
     <!-- Bootstrap core CSS -->
     <link href="bs/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
@@ -32,9 +27,6 @@ if(isset($_SESSION["id"])){
    <link rel="stylesheet" type="text/css" href="bs/css/bootstrap-clockpicker.min.css">
     <!-- Custom styles for this template -->
     <link href="bs/theme/theme.css" rel="stylesheet">
-
-
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -95,9 +87,7 @@ if(isset($_SESSION["id"])){
 }
 	</style>
   </head>
-
   <body>
-
     <?php include("include/header.php"); ?>
     <nav class="navbar navbar-inverse">
       <div class="container">
@@ -136,8 +126,6 @@ if(isset($_SESSION["id"])){
       </div>
       <div class="row" id="divservicios">
      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12"> <h3>Servicios</h3></div>
-     
-     
      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" ><button type="button" class="btn btn-success  " onclick="add_servicio()"  >Nuevo</button></div>
         <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
         <table style="display:none" id="renderServicio"><tbody id="cuerpo"><tr>
@@ -195,8 +183,7 @@ if(isset($_SESSION["id"])){
           </table>
           </div>
         </div>
-      </div>
-                     
+      </div>       
     <div class="row" id="diveventos" style="display:none" >
      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12"> <h3>Eventos</h3></div>
         <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" ><button type="button" class="btn btn-success" onclick="add_evento()">Nuevo</button></div>
