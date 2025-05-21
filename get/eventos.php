@@ -2,25 +2,39 @@
 include("../conection/config.php");
 
 $salida=array();
- 
-$id_servicio = mysqli_real_escape_string($mysqli,$_REQUEST['servicio']);
-$id = mysqli_real_escape_string($mysqli,$_REQUEST['id']);
-$fechai = mysqli_real_escape_string($mysqli,$_REQUEST['fechai']);
- 
 
-if (strlen($id_servicio)>0) {
-$sql="SELECT id_servicio,servicio_eventos.id,evento_id, max(estado_id) estado_id, min(fecha) fecha,max(fecha) fechafin,color,date(min(fecha)) original,servicio_eventos.estado,estado_evento,detalle  FROM `servicio_eventos`,estados where estado_id=estados.id and id_servicio=$id_servicio group by evento_id";
+$id_servicio = isset($_REQUEST['servicio']) ? $_REQUEST['servicio'] : '';
+$id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
+$fechai = isset($_REQUEST['fechai']) ? $_REQUEST['fechai'] : '';
 
-}else if (strlen($id)>0) {
-	$sql="SELECT y.*,(select servicio from servicios where id=id_servicio) nombre_servicio,if (y.evento_id=y.id,'Nuevo evento',(select concat(fecha,'- ',estado_evento,' ', detalle) from servicio_eventos x where x.id=y.evento_id)) nombre_evento,date_format(fecha,'%H:%i') hora,date_format(fecha,'%Y-%m-%d') fechaformato   FROM `servicio_eventos` y,estados where estado_id=estados.id  and y.id=$id";
-}else{
-	
-
-$sql="
-SELECT z.evento_id id,min(z.id_servicio) id_servicio,z.evento_id, z.estado_id, z.fecha,(select max(x.fecha) from servicio_eventos x where x.evento_id=z.evento_id) fechafin,e.color,date(z.fecha) original,z.estado FROM `servicio_eventos` z,estados e where z.estado_id=e.id and z.id=z.evento_id and z.fecha>'".$fechai."'  group by z.evento_id";
+if (strlen($id_servicio) > 0) {
+    $sql = "SELECT id_servicio, servicio_eventos.id, evento_id, MAX(estado_id) AS estado_id, MIN(fecha) AS fecha, MAX(fecha) AS fechafin, color, DATE(MIN(fecha)) AS original, servicio_eventos.estado, estado_evento, detalle 
+            FROM `servicio_eventos`, estados 
+            WHERE estado_id = estados.id AND id_servicio = ? 
+            GROUP BY evento_id";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $id_servicio);
+} else if (strlen($id) > 0) {
+    $sql = "SELECT y.*, (SELECT servicio FROM servicios WHERE id = id_servicio) AS nombre_servicio, 
+            IF(y.evento_id = y.id, 'Nuevo evento', (SELECT CONCAT(fecha, '- ', estado_evento, ' ', detalle) FROM servicio_eventos x WHERE x.id = y.evento_id)) AS nombre_evento, 
+            DATE_FORMAT(fecha, '%H:%i') AS hora, DATE_FORMAT(fecha, '%Y-%m-%d') AS fechaformato 
+            FROM `servicio_eventos` y, estados 
+            WHERE estado_id = estados.id AND y.id = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $id);
+} else {
+    $sql = "SELECT z.evento_id AS id, MIN(z.id_servicio) AS id_servicio, z.evento_id, z.estado_id, z.fecha, 
+            (SELECT MAX(x.fecha) FROM servicio_eventos x WHERE x.evento_id = z.evento_id) AS fechafin, 
+            e.color, DATE(z.fecha) AS original, z.estado 
+            FROM `servicio_eventos` z, estados e 
+            WHERE z.estado_id = e.id AND z.id = z.evento_id AND z.fecha > ? 
+            GROUP BY z.evento_id";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $fechai);
 }
 
-		$result=$mysqli->query($sql);
+		$stmt->execute();
+		$result = $stmt->get_result();
 		$rows = $result->num_rows;
 		
 		if($rows > 0) {
@@ -35,26 +49,28 @@ SELECT z.evento_id id,min(z.id_servicio) id_servicio,z.evento_id, z.estado_id, z
  
 
  
-$sql = "SELECT * FROM `estados` order by id asc";
- 
-		$result=$mysqli->query($sql);
-		$rows = $result->num_rows;
-		
-		if($rows > 0) {
-			while($row = $result->fetch_assoc())
-			{
-				$salida2[]=$row;
-				} 
-		}
+$sql_estados = "SELECT * FROM `estados` ORDER BY id ASC";
+$stmt_estados = $mysqli->prepare($sql_estados);
+$stmt_estados->execute();
+$result_estados = $stmt_estados->get_result();
+$rows_estados = $result_estados->num_rows;
+
+if ($rows_estados > 0) {
+    while ($row = $result_estados->fetch_assoc()) {
+        $salida2[] = $row;
+    }
+}
 		setlocale(LC_ALL, 'es_CL.UTF-8');
 	date_default_timezone_set("America/Santiago");
 		
-$sql=	"SELECT if(max(last) is null,'Sin eventos recientes',UNIX_TIMESTAMP(max(last))) salida FROM `servicio_eventos` WHERE estado='vigente'";
-$result=$mysqli->query($sql);
-		$rows = $result->num_rows;
+$sql_last_update = "SELECT IF(MAX(last) IS NULL, 'Sin eventos recientes', UNIX_TIMESTAMP(MAX(last))) AS salida FROM `servicio_eventos` WHERE estado = 'vigente'";
+$stmt_last_update = $mysqli->prepare($sql_last_update);
+$stmt_last_update->execute();
+$result_last_update = $stmt_last_update->get_result();
+$rows_last_update = $result_last_update->num_rows;
 		
-		if($rows > 0) {
-			while($row = $result->fetch_assoc())
+		if($rows_last_update > 0) {
+			while($row = $result_last_update->fetch_assoc())
 			{
 				$salida3=$row["salida"];
 				} 

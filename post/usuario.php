@@ -7,22 +7,51 @@ if ($_SESSION['id']*1<1) {
 	}
 $salida=array();
 
+$nombre = isset($_REQUEST['nombre']) ? $mysqli->real_escape_string($_REQUEST['nombre']) : '';
+$login = isset($_REQUEST['login']) ? $mysqli->real_escape_string($_REQUEST['login']) : '';
+$password = isset($_REQUEST['password']) ? $_REQUEST['password'] : ''; // Do not escape password before hashing
+$mail = isset($_REQUEST['mail']) ? $mysqli->real_escape_string($_REQUEST['mail']) : '';
 
-		$nombre = mysqli_real_escape_string($mysqli,$_REQUEST['nombre']);
-		$login = mysqli_real_escape_string($mysqli,$_REQUEST['login']);
-		$password = mysqli_real_escape_string($mysqli,$_REQUEST['password']);
-		$mail = mysqli_real_escape_string($mysqli,$_REQUEST['mail']);
-		$pass =password_hash($password, PASSWORD_DEFAULT);
-$sql = "INSERT INTO `usuarios` ( `login`, `pass`,  `nombre`, mail) VALUES ('$login', '$pass', '$nombre','$mail')";
+if (empty($nombre) || empty($login) || empty($password) || empty($mail)) {
+    echo json_encode(array("respuesta"=>"Todos los campos (nombre, login, password, mail) son requeridos.","tipo"=>"warning"));
+    exit;
+}
 
-		$result=$mysqli->query($sql);
-		 
-		 if ($mysqli->affected_rows>0){	
-		 	echo json_encode(array("respuesta"=>"<strong>Exito!!</strong> Se ha ingresado el usuario exitosamente!","tipo"=>"success")); 
-		 }else
-		 {
-			   echo json_encode(array("respuesta"=>"Error al grabar:".$mysqli->error,"tipo"=>"danger"));  
-			   
-			 }
+// Validate email format (basic)
+if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(array("respuesta"=>"Formato de correo electrónico no válido.","tipo"=>"warning"));
+    exit;
+}
+
+$pass_hashed = password_hash($password, PASSWORD_DEFAULT);
+
+if ($pass_hashed === false) {
+    echo json_encode(array("respuesta"=>"Error al procesar la contraseña.","tipo"=>"danger"));
+    exit;
+}
+
+$sql = "INSERT INTO `usuarios` (`login`, `pass`, `nombre`, `mail`) VALUES (?, ?, ?, ?)";
+$stmt = $mysqli->prepare($sql);
+
+if ($stmt) {
+    // Bind parameters: login (string), pass_hashed (string), nombre (string), mail (string)
+    $stmt->bind_param("ssss", $login, $pass_hashed, $nombre, $mail);
+
+    if ($stmt->execute()) {
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(array("respuesta"=>"<strong>Exito!!</strong> Se ha ingresado el usuario exitosamente!","tipo"=>"success"));
+        } else {
+            // This case might occur if the query executes but no row is inserted (e.g., unique constraint violation on login or mail if they exist)
+            echo json_encode(array("respuesta"=>"Usuario no ingresado, es posible que el login o email ya existan.","tipo"=>"warning"));
+        }
+    } else {
+        // Provide more specific error if possible, otherwise generic. $mysqli->error might refer to $mysqli object state, $stmt->error for statement specific
+        echo json_encode(array("respuesta"=>"Error al grabar en la base de datos: " . $stmt->error,"tipo"=>"danger"));
+    }
+    $stmt->close();
+} else {
+    // Error in preparing the statement
+     echo json_encode(array("respuesta"=>"Error al preparar la consulta: " . $mysqli->error,"tipo"=>"danger"));
+}
 		
 ?>

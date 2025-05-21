@@ -2,14 +2,19 @@
 include("../conection/config.php");
 
 $salida=array();
-$id = mysqli_real_escape_string($mysqli,$_REQUEST['id']);
+$id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
 
-if (strlen($id)>0){
-$sql = "SELECT * FROM `estados` where id=$id";
-}else{
-$sql = "SELECT * FROM `estados` order by id asc";
+if (strlen($id) > 0) {
+    $sql = "SELECT * FROM `estados` WHERE id = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $id);
+} else {
+    $sql = "SELECT * FROM `estados` ORDER BY id ASC";
+    $stmt = $mysqli->prepare($sql);
 }
-		$result=$mysqli->query($sql);
+
+		$stmt->execute();
+		$result = $stmt->get_result();
 		$rows = $result->num_rows;
 		
 		if($rows > 0) {

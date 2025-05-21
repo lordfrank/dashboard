@@ -2,14 +2,22 @@
 include("../conection/config.php");
 
 $salida=array();
-$id=mysqli_real_escape_string($mysqli,$_REQUEST['id']);
+$id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
 
-if (strlen($id)>0){
-	$sql = "SELECT *  from servicios where id=$id";
-}else{
-$sql = "SELECT servicios.id, servicios.servicio,estados.color,servicios.estado_servicio,servicios.estado, servicios.estado_id  from servicios,estados where estados.id=estado_id order by servicio asc";
+if (strlen($id) > 0) {
+    $sql = "SELECT * FROM servicios WHERE id = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $id);
+} else {
+    $sql = "SELECT servicios.id, servicios.servicio, estados.color, servicios.estado_servicio, servicios.estado, servicios.estado_id 
+            FROM servicios, estados 
+            WHERE estados.id = estado_id 
+            ORDER BY servicio ASC";
+    $stmt = $mysqli->prepare($sql);
 }
-		$result=$mysqli->query($sql);
+
+		$stmt->execute();
+		$result = $stmt->get_result();
 		$rows = $result->num_rows;
 		
 		if($rows > 0) {

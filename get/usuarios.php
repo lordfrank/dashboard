@@ -9,14 +9,19 @@ if ($_SESSION['id']*1<1) {
 include("../conection/config.php");
 
 $salida=array();
-$id = mysqli_real_escape_string($mysqli,$_REQUEST['id']);
+$id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
 
-if (strlen($id)>0){
-$sql = "SELECT id, login, nombre, mail, estado FROM `usuarios` where id=$id";
-}else{
-$sql = "SELECT id, login, nombre, mail, estado FROM `usuarios` order by id asc";
+if (strlen($id) > 0) {
+    $sql = "SELECT id, login, nombre, mail, estado FROM `usuarios` WHERE id = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $id);
+} else {
+    $sql = "SELECT id, login, nombre, mail, estado FROM `usuarios` ORDER BY id ASC";
+    $stmt = $mysqli->prepare($sql);
 }
-		$result=$mysqli->query($sql);
+
+		$stmt->execute();
+		$result = $stmt->get_result();
 		$rows = $result->num_rows;
 		
 		if($rows > 0) {

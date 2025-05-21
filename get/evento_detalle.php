@@ -2,14 +2,22 @@
 include("../conection/config.php");
 
 $salida=array();
-$codigo=mysqli_real_escape_string($mysqli,$_REQUEST['codigo']);
-$codigo=$codigo*1;
-if ($codigo>0) {
-$sql = "  SELECT color, fecha, detalle,(select servicio from servicios where servicios.id=id_servicio ) servicio , servicio_eventos.estado FROM `servicio_eventos`, estados  WHERE  estado_id=estados.id and (servicio_eventos.evento_id=".$codigo." or servicio_eventos.id=".$codigo.")  order by fecha desc";
-}else {
-	$sql = "select * FROM `servicio_eventos` order by servicio_eventos.evento_id desc ";
-	}
-		$result=$mysqli->query($sql);
+$codigo = isset($_REQUEST['codigo']) ? (int)$_REQUEST['codigo'] : 0;
+
+if ($codigo > 0) {
+    $sql = "SELECT color, fecha, detalle, (SELECT servicio FROM servicios WHERE servicios.id = id_servicio) AS servicio, servicio_eventos.estado 
+            FROM `servicio_eventos`, estados  
+            WHERE estado_id = estados.id AND (servicio_eventos.evento_id = ? OR servicio_eventos.id = ?)  
+            ORDER BY fecha DESC";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("ii", $codigo, $codigo);
+} else {
+    $sql = "SELECT * FROM `servicio_eventos` ORDER BY servicio_eventos.evento_id DESC";
+    $stmt = $mysqli->prepare($sql);
+}
+
+		$stmt->execute();
+		$result = $stmt->get_result();
 		$rows = $result->num_rows;
 		
 		if($rows > 0) {
