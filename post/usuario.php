@@ -2,15 +2,16 @@
 include("../conection/config.php");
 session_start();
 
-if ($_SESSION['id']*1<1) {
-	echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
-	}
+if (!isset($_SESSION['id']) || (int)$_SESSION['id'] < 1) {
+    echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
+    exit; 
+}
 $salida=array();
 
-$nombre = isset($_REQUEST['nombre']) ? $mysqli->real_escape_string($_REQUEST['nombre']) : '';
-$login = isset($_REQUEST['login']) ? $mysqli->real_escape_string($_REQUEST['login']) : '';
+$nombre = isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : ''; // mysqli_real_escape_string removed
+$login = isset($_REQUEST['login']) ? $_REQUEST['login'] : ''; // mysqli_real_escape_string removed
 $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : ''; // Do not escape password before hashing
-$mail = isset($_REQUEST['mail']) ? $mysqli->real_escape_string($_REQUEST['mail']) : '';
+$mail = isset($_REQUEST['mail']) ? $_REQUEST['mail'] : ''; // mysqli_real_escape_string removed
 
 if (empty($nombre) || empty($login) || empty($password) || empty($mail)) {
     echo json_encode(array("respuesta"=>"Todos los campos (nombre, login, password, mail) son requeridos.","tipo"=>"warning"));

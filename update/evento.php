@@ -2,9 +2,10 @@
 include("../conection/config.php");
 session_start();
 
-if ($_SESSION['id']*1<1) {
-	echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
-	}
+if (!isset($_SESSION['id']) || (int)$_SESSION['id'] < 1) {
+    echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
+    exit; 
+}
 $salida=array();
 
 // Input validation and sanitization
@@ -12,8 +13,8 @@ $id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
 $fecha = isset($_REQUEST['fecha']) ? $_REQUEST['fecha'] : '';
 $hora = isset($_REQUEST['hora']) ? $_REQUEST['hora'] : '';
 $estado_evento_id = isset($_REQUEST['estado_evento']) ? (int)$_REQUEST['estado_evento'] : 0; // ID for state lookup and 'estado_id' column
-$detalle = isset($_REQUEST['detalle']) ? $mysqli->real_escape_string($_REQUEST['detalle']) : '';
-$estado_string = isset($_REQUEST['estado']) ? $mysqli->real_escape_string($_REQUEST['estado']) : ''; // Textual status e.g. "vigente"
+$detalle = isset($_REQUEST['detalle']) ? $_REQUEST['detalle'] : ''; // mysqli_real_escape_string removed
+$estado_string = isset($_REQUEST['estado']) ? $_REQUEST['estado'] : ''; // mysqli_real_escape_string removed, Textual status e.g. "vigente"
 
 // Unused variables from original code, kept for reference, can be removed
 // $evento_id = isset($_REQUEST['evento']) ? $mysqli->real_escape_string($_REQUEST['evento']) : '';

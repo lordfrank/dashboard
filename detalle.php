@@ -149,7 +149,7 @@ getEstados();
                 url:   "get/evento_detalle.php",
                 type:  "POST",
                 dataType: "json",
-				data:"codigo="+<?php echo $_REQUEST["codigo"]*1?>,
+				data:"codigo="+<?php echo (int)($_REQUEST["codigo"] ?? 0); ?>,
                 success:  function (r) 
                 {  
 					var j=1;

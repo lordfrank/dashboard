@@ -3,9 +3,10 @@ include("../conection/config.php");
 
 session_start();
 
-if ($_SESSION['id']*1<1) {
-	echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
-	}
+if (!isset($_SESSION['id']) || (int)$_SESSION['id'] < 1) {
+    echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
+    exit; 
+}
 $salida=array();
 
 $nombre = isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '';

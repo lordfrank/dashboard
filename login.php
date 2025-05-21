@@ -35,7 +35,7 @@ include("conection/config.php");
 	}
 
 if(isset($_SESSION["id"])){
-	if ($_SESSION["id"]*1>0){
+	if ((int)$_SESSION["id"] > 0){
 header('Location: adminDashboard.php');
 	}
 }

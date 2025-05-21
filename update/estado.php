@@ -2,15 +2,16 @@
 include("../conection/config.php");
 session_start();
 
-if ($_SESSION['id']*1<1) {
-	echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
-	}
+if (!isset($_SESSION['id']) || (int)$_SESSION['id'] < 1) {
+    echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
+    exit; 
+}
 $salida=array();
 
 $id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
-$nombre = isset($_REQUEST['nombre']) ? $mysqli->real_escape_string($_REQUEST['nombre']) : '';
-$color = isset($_REQUEST['color']) ? $mysqli->real_escape_string($_REQUEST['color']) : '';
-$estado = isset($_REQUEST['estado']) ? $mysqli->real_escape_string($_REQUEST['estado']) : ''; // Assuming 'estado' is a string field
+$nombre = isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : ''; // mysqli_real_escape_string removed
+$color = isset($_REQUEST['color']) ? $_REQUEST['color'] : ''; // mysqli_real_escape_string removed
+$estado = isset($_REQUEST['estado']) ? $_REQUEST['estado'] : ''; // mysqli_real_escape_string removed, Assuming 'estado' is a string field
 
 if ($id <= 0) {
     echo json_encode(array("respuesta"=>"ID de estado no válido o no proporcionado.","tipo"=>"warning"));

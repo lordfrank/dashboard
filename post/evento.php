@@ -2,9 +2,10 @@
 include("../conection/config.php");
 session_start();
 
-if ($_SESSION['id']*1<1) {
-	echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
-	}
+if (!isset($_SESSION['id']) || (int)$_SESSION['id'] < 1) {
+    echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
+    exit; 
+}
 $salida=array();
 
 // Input validation and sanitization
@@ -13,7 +14,7 @@ $id_servicio = isset($_REQUEST['servicio']) ? (int)$_REQUEST['servicio'] : 0;
 $fecha = isset($_REQUEST['fecha']) ? $_REQUEST['fecha'] : '';
 $hora = isset($_REQUEST['hora']) ? $_REQUEST['hora'] : '';
 $estado_id = isset($_REQUEST['estado_evento']) ? (int)$_REQUEST['estado_evento'] : 0;
-$detalle = isset($_REQUEST['detalle']) ? $mysqli->real_escape_string($_REQUEST['detalle']) : ''; // Keep escaping for free text, though prepared statements help
+$detalle = isset($_REQUEST['detalle']) ? $_REQUEST['detalle'] : ''; // mysqli_real_escape_string removed as it's used in a prepared statement
 
 if (empty($id_servicio) || empty($fecha) || empty($hora) || empty($estado_id)) {
     echo json_encode(array("respuesta"=>"Datos incompletos (servicio, fecha, hora, estado son requeridos).","tipo"=>"warning"));

@@ -2,17 +2,18 @@
 include("../conection/config.php");
 session_start();
 
-if ($_SESSION['id']*1<1) {
-	echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
-	}
+if (!isset($_SESSION['id']) || (int)$_SESSION['id'] < 1) {
+    echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
+    exit; 
+}
 $salida=array();
 
 $id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
-$nombre = isset($_REQUEST['nombre']) ? $mysqli->real_escape_string($_REQUEST['nombre']) : '';
-$mail = isset($_REQUEST['mail']) ? $mysqli->real_escape_string($_REQUEST['mail']) : '';
-$login = isset($_REQUEST['login']) ? $mysqli->real_escape_string($_REQUEST['login']) : '';
+$nombre = isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : ''; // mysqli_real_escape_string removed
+$mail = isset($_REQUEST['mail']) ? $_REQUEST['mail'] : ''; // mysqli_real_escape_string removed
+$login = isset($_REQUEST['login']) ? $_REQUEST['login'] : ''; // mysqli_real_escape_string removed
 $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : ''; // Do not escape password before hashing, if provided
-$estado = isset($_REQUEST['estado']) ? $mysqli->real_escape_string($_REQUEST['estado']) : '';
+$estado = isset($_REQUEST['estado']) ? $_REQUEST['estado'] : ''; // mysqli_real_escape_string removed
 
 if ($id <= 0) {
     echo json_encode(array("respuesta"=>"ID de usuario no válido o no proporcionado.","tipo"=>"warning"));

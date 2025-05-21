@@ -2,9 +2,12 @@
 
 session_start();
 
-if ($_SESSION['id']*1<1) {
-	echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
-	}
+// Ensure session ID exists and is valid before using it.
+if (!isset($_SESSION['id']) || (int)$_SESSION['id'] < 1) {
+    echo json_encode(array("respuesta"=>"Sin permisos","tipo"=>"danger"));
+    // It's good practice to exit here if permissions are denied.
+    exit; 
+}
 
 include("../conection/config.php");
 

@@ -75,11 +75,37 @@ $rows_last_update = $result_last_update->num_rows;
 				$salida3=$row["salida"];
 				} 
 		}
-		if ($salida3!="Sin eventos recientes") {
-		print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=>   strftime(" %e de %B de %G , %H:%M:%S ",$salida3*1) ));
-		}else
-		{
-				print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=>  $salida3 ));	
-			}
+		if ($salida3!="Sin eventos recientes" && is_numeric($salida3)) {
+            $timestamp = (int)$salida3;
+            // Timezone is already set by date_default_timezone_set("America/Santiago");
+            // Locale 'es_CL.UTF-8' is set by setlocale(LC_ALL, 'es_CL.UTF-8');
+            // Ensure the intl extension is available.
+            if (class_exists('IntlDateFormatter')) {
+                $fmt = new IntlDateFormatter(
+                    'es_CL',
+                    IntlDateFormatter::FULL, // Date type (can be adjusted if pattern is more specific)
+                    IntlDateFormatter::FULL, // Time type (can be adjusted if pattern is more specific)
+                    'America/Santiago',      // Timezone
+                    IntlDateFormatter::GREGORIAN,
+                    " d 'de' MMMM 'de' yyyy , HH:mm:ss " // ICU pattern
+                );
+                if ($fmt) {
+                    $formatted_date = $fmt->format($timestamp);
+                    // Add leading and trailing spaces as in the original strftime format string
+                    print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=> " " . $formatted_date . " "));
+                } else {
+                    // Fallback or error if IntlDateFormatter fails
+                    // For simplicity, using original value or a simple date() format
+                    error_log("IntlDateFormatter creation failed. Error: " . intl_get_error_message());
+                    print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=>  date("Y-m-d H:i:s", $timestamp) ));
+                }
+            } else {
+                // Fallback if intl extension is not loaded
+                error_log("PHP intl extension is not available. Using fallback date format.");
+                print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=> date("Y-m-d H:i:s", $timestamp) ));
+            }
+		} else {
+            print json_encode(array("eventos"=>$salida,"estados"=>$salida2,"update"=>  $salida3 ));	
+		}
 		
 ?>
