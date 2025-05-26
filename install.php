@@ -2,6 +2,12 @@
 session_start();
 include("conection/config.php");
 
+$randomPassword = '';
+$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+$charactersLength = strlen($characters);
+for ($i = 0; $i < 16; $i++) {
+    $randomPassword .= $characters[random_int(0, $charactersLength - 1)];
+}
 	
 $go=mysqli_real_escape_string($mysqli,$_REQUEST['go']);
 
@@ -65,7 +71,7 @@ $sql="CREATE TABLE `usuarios` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 $result=$mysqli->query($sql);
  
-$sql="INSERT INTO `usuarios` (`id`, `login`, `pass`, `estado`,`nombre`) VALUES (1, 'admin', '".password_hash("temporal2017", PASSWORD_DEFAULT)."', 'vigente','super admin');";
+$sql="INSERT INTO `usuarios` (`id`, `login`, `pass`, `estado`,`nombre`) VALUES (1, 'admin', '".password_hash($randomPassword, PASSWORD_DEFAULT)."', 'vigente','super admin');";
 $salida=$salida."<br>insertando data  ...";
  $result=$mysqli->query($sql);
 $sql="ALTER TABLE `estados`
@@ -106,6 +112,7 @@ $sql="ALTER TABLE `usuarios`
 
 
 $salida=$salida."<br>fin rutina";
+$salida = $salida . "<br>instalacion completada , password de admin " . $randomPassword;
 $exito=1;
 }
 ?>
